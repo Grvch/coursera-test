@@ -1,0 +1,131 @@
+/* Estilo base para todos los elementos: usar border-box */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cuerpo del documento */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px; /* Padding general del body */
+  background-color: #f4f4f4;
+}
+
+/* Título principal */
+h1 {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Contenedor para las secciones para limpiar los floats (asume que tienes <div class="row"> en tu HTML) */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Secciones generales */
+.section {
+  float: left;
+  padding: 20px; /* Padding interno para el texto */
+  border: 1px solid black;
+  position: relative;
+  min-height: 200px;
+  /* Margen base que se ajustará en las media queries */
+  margin-bottom: 20px; /* Margen vertical entre filas */
+  /* Quitamos width y margin horizontal de aquí para definirlos solo en media queries */
+}
+
+/* Título dentro de la sección */
+.section-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ffcc00; /* Color general, overrides por ID */
+  color: #000;
+  border: 1px solid black;
+  padding: 5px 10px;
+  font-size: 1.25em;
+}
+
+/* Párrafo dentro de la sección */
+.section p {
+  margin-top: 50px; /* Espacio para el título */
+}
+
+/* Colores de fondo distintos por sección */
+#chicken {
+  background-color: #ffe5e5;
+}
+
+#beef {
+  background-color: #e5ffe5;
+}
+
+#sushi {
+  background-color: #e5f0ff;
+}
+
+/* Colores distintos para cada título */
+#chicken .section-title {
+  background-color: #ff6666;
+  color: white;
+}
+
+#beef .section-title {
+  background-color: #33cc33;
+  color: white;
+}
+
+#sushi .section-title {
+  background-color: #3399ff;
+  color: white;
+}
+
+/* -------- DESKTOP (992px y arriba) -------- */
+@media (min-width: 992px) {
+  .section {
+    /* Calculamos el ancho para 3 columnas con un gap de 20px entre ellas */
+    width: calc(33.3333% - 14px); /* (100% / 3) - (2/3 * 20px de gap total horizontal) */
+    margin-right: 20px; /* Margen a la derecha de cada sección */
+  }
+
+  /* La última sección de la fila (la tercera) no debe tener margen a la derecha */
+  .section:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+/* -------- TABLET (768px - 991px) -------- */
+@media (min-width: 768px) and (max-width: 991px) {
+  .section {
+    /* Las dos primeras secciones deben ser de 50% con un espacio entre ellas */
+    width: calc(50% - 10px); /* (100% / 2) - (1/2 * 20px de gap total horizontal) */
+    margin-right: 20px; /* Margen a la derecha para la primera columna (Chicken) */
+  }
+
+  /* La segunda sección de la fila (Beef) no debe tener margen a la derecha */
+  .section:nth-child(2n) {
+    margin-right: 0;
+  }
+
+  /* La tercera sección (Sushi) debe ocupar el 100% de ancho en una nueva fila */
+  #sushi {
+    width: 100%;
+    margin-right: 0; /* Aseguramos que no tenga margen derecho */
+    float: none; /* Muy importante: no flotar para ocupar toda la línea */
+    clear: both; /* Muy importante: fuerza a que se posicione debajo de los floats anteriores */
+  }
+}
+
+/* -------- MOBILE (0px - 767px) -------- */
+@media (max-width: 767px) {
+  .section {
+    width: 100%;
+    float: none; /* Cada sección ocupa todo el ancho y no flota */
+    margin-right: 0; /* No hay margen horizontal necesario */
+    margin-left: 0;
+  }
+}
